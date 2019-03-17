@@ -196,7 +196,7 @@ function initPressure() {
     Pressure.config({
       polyfill: true, // use time-based fallback ?
       polyfillSpeedUp: 1000, // how long does the fallback take to reach full pressure
-      polyfillSpeedDown: 0,
+      polyfillSpeedDown: 300,
       preventSelect: true,
       only: null
  		 });

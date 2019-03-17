@@ -12,7 +12,7 @@
 ************************/
 
 // How sensitive is the brush size to the pressure of the pen?
-var pressureMultiplier = 10; 
+var pressureMultiplier = 10;
 
 // What is the smallest size for the brush?
 var minBrushSize = 1;
@@ -34,7 +34,7 @@ var beta      = 1.0;  // increase this to get rid of high speed lag
 var xFilter, yFilter, pFilter;
 var inBetween;
 var prevPenX = 0;
-var prevPenY = 0; 
+var prevPenY = 0;
 var prevBrushSize = 1;
 var amt, x, y, s, d;
 var pressure = -2;
@@ -48,36 +48,36 @@ var isDrawingJustStarted = false;
 *    DRAWING CANVAS    *
 ************************/
 new p5(function(p) {
-  
+
   p.setup = function() {
-    
+
     // Filters used to smooth position and pressure jitter
     xFilter = new OneEuroFilter(60, minCutoff, beta, 1.0);
     yFilter = new OneEuroFilter(60, minCutoff, beta, 1.0);
     pFilter = new OneEuroFilter(60, minCutoff, beta, 1.0);
-    
+
     // prevent scrolling on iOS Safari
     disableScroll();
-    
+
     //Initialize the canvas
     drawCanvas = p.createCanvas(p.windowWidth, p.windowHeight);
     drawCanvas.id("drawingCanvas");
-    drawCanvas.position(0, 0);    
+    drawCanvas.position(0, 0);
   }
 
   p.draw = function() {
-    
+
     // Start Pressure.js if it hasn't started already
     if(isPressureInit == false){
       initPressure();
     }
-      
-    
-    if(isDrawing) {      
-      // Smooth out the position of the pointer 
+
+
+    if(isDrawing) {
+      // Smooth out the position of the pointer
       penX = xFilter.filter(p.mouseX, p.millis());
       penY = yFilter.filter(p.mouseY, p.millis());
-      
+
       // What to do on the first frame of the stroke
       if(isDrawingJustStarted) {
         //console.log("started drawing");
@@ -98,7 +98,7 @@ new p5(function(p) {
       // will be drawn to fill in the empty space
       inBetween = (d / p.min(brushSize,prevBrushSize)) * brushDensity;
 
-      // Add ellipses to fill in the space 
+      // Add ellipses to fill in the space
       // between samples of the pen position
       for(i=1;i<=inBetween;i++){
         amt = i/inBetween;
@@ -107,7 +107,7 @@ new p5(function(p) {
         y = p.lerp(prevPenY, penY, amt);
         p.noStroke();
         p.fill(100)
-        p.ellipse(x, y, s);      
+        p.ellipse(x, y, s);
       }
 
       // Draw an ellipse at the latest position
@@ -116,13 +116,13 @@ new p5(function(p) {
       p.ellipse(penX, penY, brushSize);
 
       // Save the latest brush values for next frame
-      prevBrushSize = brushSize; 
+      prevBrushSize = brushSize;
       prevPenX = penX;
       prevPenY = penY;
-      
+
       isDrawingJustStarted = false;
     }
-    
+
   }
 }, "p5_instance_01");
 
@@ -137,27 +137,25 @@ new p5(function(p) {
       uiCanvas.id("uiCanvas");
       uiCanvas.position(0, 0);
     }
-  
+
   	p.draw = function() {
-      
+
       uiCanvas.clear();
-      
+
       if(showDebug){
         p.text("pressure = " + pressure, 10, 20);
-        
+
         p.stroke(200,50);
         p.line(p.mouseX,0,p.mouseX,p.height);
         p.line(0,p.mouseY,p.width,p.mouseY);
 
-        // The "loading bar" at the top
-        // is only there as a visual indicator
-        // that the sketch is running
         p.noStroke();
         p.fill(100)
-        p.rect(0, 0, p.frameCount % p.width, 4);
+        var w = p.width * pressure;
+        p.rect(0, 0, w, 4);
       }
     }
-  	
+
 
 }, "p5_instance_02");
 
@@ -169,11 +167,11 @@ new p5(function(p) {
 // Initializing Pressure.js
 // https://pressurejs.com/documentation.html
 function initPressure() {
-  
+
   	//console.log("Attempting to initialize Pressure.js ");
-  
+
     Pressure.set('#uiCanvas', {
-      
+
       start: function(event){
         // this is called on force start
         isDrawing = true;
@@ -191,10 +189,10 @@ function initPressure() {
       	}
         //console.log(force);
         pressure = force;
-        
+
       }
     });
-  
+
     Pressure.config({
       polyfill: true, // use time-based fallback ?
       polyfillSpeedUp: 1000, // how long does the fallback take to reach full pressure
@@ -202,7 +200,7 @@ function initPressure() {
       preventSelect: true,
       only: null
  		 });
-  
+
 }
 
 // Disabling scrolling and bouncing on iOS Safari

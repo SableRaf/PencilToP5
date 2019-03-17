@@ -4,4 +4,4 @@ This is a minimal demo of a simple drawing tool supporting the Apple Pencil in i
 
 Online demo: https://editor.p5js.org/SableRaf/full/PNSk4uR9v
 
-![Snapshots](https://raw.github.com/SableRaf/PencilToP5/blob/master/img/pencilToP5.jpeg)
+![Snapshots](https://raw.githubusercontent.com/SableRaf/PencilToP5/master/img/pencilToP5.jpeg)

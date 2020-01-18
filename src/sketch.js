@@ -6,10 +6,17 @@
 // https://patrickhlauke.github.io/touch/
 // https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/pressure
 
+// Next: smooth curves:
+// https://forum.processing.org/two/discussion/17249/smooth-curves-from-series-of-x-y-co-ordinates
+// https://p5js.org/reference/#/p5/curvePoint
+
+// The two and three fingers tap detection with Hammer.js seem very unreliable
+// Could it be that detecting events on Document.body is not the right way to go?
+// or maybe Pressure.js and Hammer.js don't play well together?
 
 /***********************
-*       SETTINGS       *
-************************/
+ *       SETTINGS       *
+ ************************/
 
 // How sensitive is the brush size to the pressure of the pen?
 var pressureMultiplier = 10;

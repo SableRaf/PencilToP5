@@ -297,8 +297,8 @@ mc.add(
   })
 );
 
-mc.get("twofingerstap").recognizeWith("onefingertap");
-mc.get("threefingerstap").recognizeWith("twofingerstap");
+//mc.get("twofingerstap").recognizeWith("onefingertap");
+//mc.get("threefingerstap").recognizeWith("twofingerstap");
 
 // we only want to trigger a specific tap when
 // we have NOT detected a tap with a larger number of fingers
@@ -314,7 +314,10 @@ var timer;
 mc.on("threefingerstap", () => {
   mc.get("twofingerstap").set({ enable: false });
   // start a countdown, when the countdown ends, re-enable two finger tap
-  timer = setTimeout(mc.get("twofingerstap").set({ enable: true }), 1000); // not working
+  timer = setTimeout(function() {
+    mc.get("twofingerstap").set({ enable: true });
+    //alert("two finger tap re-enabled");
+  }, 1000); // not working
 });
 
 function undo(event) {
@@ -383,3 +386,9 @@ function disableScroll() {
 function enableScroll(){
     document.body.removeEventListener('touchmove', preventDefault, { passive: false });
 }*/
+
+window.setTimeout(function() {
+  var element = document.querySelector("#fullcontent");
+  var className = element.className;
+  element.className = className.concat(" onload");
+}, 2100);

@@ -309,9 +309,12 @@ mc.on("twofingerstap", undo);
 
 mc.on("threefingerstap", redo);
 
+var timer;
+
 mc.on("threefingerstap", () => {
   mc.get("twofingerstap").set({ enable: false });
   // start a countdown, when the countdown ends, re-enable two finger tap
+  timer = setTimeout(mc.get("twofingerstap").set({ enable: true }), 1000); // not working
 });
 
 function undo(event) {
